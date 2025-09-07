@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduDisha - Your Personalized Career & Education Advisor</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // Tailwind Configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-indigo-600" id="home-link">EduDisha</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#colleges" class="nav-link" id="nav-colleges">Find Colleges</a>
+                <a href="#careers" class="nav-link" id="nav-careers">Career Paths</a>
+                <a href="#quiz" class="nav-link" id="nav-quiz">Aptitude Test</a>
+            </div>
+            <div id="auth-container-desktop" class="hidden md:flex items-center">
+                 <button id="login-btn-desktop" class="auth-button">Login</button>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
+            <a href="#colleges" class="mobile-nav-link" id="mobile-nav-colleges">Find Colleges</a>
+            <a href="#careers" class="mobile-nav-link" id="mobile-nav-careers">Career Paths</a>
+            <a href="#quiz" class="mobile-nav-link" id="mobile-nav-quiz">Aptitude Test</a>
+            <div id="auth-container-mobile" class="p-4">
+                <button id="login-btn-mobile" class="w-full auth-button">Login</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <!-- Home Section -->
+        <section id="home-section">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden p-8 md:p-12 text-center">
+                <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight">
+                    Confused After 10th or 12th?
+                </h1>
+                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
+                    Let's find the perfect stream, college, and career path for you. Your personalized journey starts here.
+                </p>
+                <button id="start-quiz-btn" class="mt-8 bg-indigo-600 text-white font-bold py-4 px-10 rounded-full text-lg hover:bg-indigo-700 transform hover:scale-105 transition-transform duration-300">
+                    Take the Free Aptitude Test
+                </button>
+            </div>
+            
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Features -->
+                <div class="feature-card">
+                    <svg class="feature-icon text-indigo-500 bg-indigo-100" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                    <h3 class="text-xl font-bold mb-2">Aptitude & Interest Test</h3>
+                    <p class="text-slate-600">Discover your strengths and get matched with the right subjects and career options.</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon text-green-500 bg-green-100" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    <h3 class="text-xl font-bold mb-2">Nearby College Directory</h3>
+                    <p class="text-slate-600">Explore government colleges near you with details on courses, fees, and eligibility.</p>
+                </div>
+                <div class="feature-card">
+                     <svg class="feature-icon text-sky-500 bg-sky-100" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                    <h3 class="text-xl font-bold mb-2">Course-to-Career Maps</h3>
+                    <p class="text-slate-600">Visualize your future with clear charts showing jobs and higher studies for each degree.</p>
+                </div>
+            </div>
+            <div id="recommendations-section" class="mt-12 hidden-section">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-6">Based on Your Test Results</h2>
+                <div id="recommendations-content" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            </div>
+        </section>
+
+        <!-- Sections for Quiz, Results, Colleges, Careers, Login -->
+        <section id="quiz-section" class="hidden-section main-content-card">
+            <h2 class="section-title">Career Aptitude Test</h2>
+            <p class="section-subtitle">Answer these 5 questions honestly to get your personalized recommendation.</p>
+            <form id="quiz-form"></form>
+            <div class="text-center mt-8">
+                <button id="submit-quiz-btn" class="primary-button">See My Results</button>
+            </div>
+        </section>
+
+        <section id="results-section" class="hidden-section main-content-card text-center">
+            <h2 class="section-title">Your Results Are In!</h2>
+            <div id="results-content" class="text-left mt-8 space-y-6"></div>
+            <div class="mt-10">
+                <button id="explore-colleges-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-700 transition-colors mr-4">Explore Recommended Colleges</button>
+                <button id="go-home-btn" class="bg-slate-200 text-slate-800 font-bold py-3 px-8 rounded-full text-lg hover:bg-slate-300 transition-colors">Back to Home</button>
+            </div>
+        </section>
+
+        <section id="colleges-section" class="hidden-section">
+            <h2 class="text-3xl font-bold mb-6">Find Government Colleges</h2>
+            <div class="bg-white p-4 rounded-xl shadow-lg mb-8 flex flex-col md:flex-row gap-4 items-center">
+                <input type="text" id="college-search" placeholder="Search by college name..." class="filter-input md:w-1/2">
+                <select id="location-filter" class="filter-input md:w-1/4">
+                    <option value="">All Locations</option>
+                </select>
+                <select id="stream-filter" class="filter-input md:w-1/4">
+                    <option value="">All Streams</option>
+                    <option value="Science">Science</option>
+                    <option value="Commerce">Commerce</option>
+                    <option value="Arts">Arts</option>
+                    <option value="Vocational">Vocational</option>
+                </select>
+            </div>
+            <div id="college-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            <p id="no-colleges-found" class="text-center text-slate-500 text-lg py-12 hidden">No colleges found matching your criteria.</p>
+        </section>
+
+        <section id="careers-section" class="hidden-section">
+            <h2 class="text-3xl font-bold mb-6">Explore Course-to-Career Paths</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="career-path-list"></div>
+        </section>
+
+        <section id="login-section" class="hidden-section flex items-center justify-center py-12">
+            <div class="main-content-card max-w-md w-full text-center">
+                <h2 class="section-title">Join EduDisha</h2>
+                <p class="section-subtitle">Sign in to save your progress and get personalized recommendations.</p>
+                <button type="button" id="google-signin-btn" class="google-signin-button">
+                    <svg class="w-6 h-6 mr-3" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l8.35 6.53C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.42-4.55H24v8.51h12.8c-.57 2.73-2.23 5.05-4.64 6.62l8.35 6.53c4.99-4.6 7.92-11.45 7.92-19.16z"></path><path fill="#FBBC05" d="M10.91 28.74c-.5-1.5-.78-3.11-.78-4.74s.28-3.24.78-4.74l-8.35-6.53C.95 16.2 0 19.98 0 24s.95 7.8 2.56 11.26l8.35-6.52z"></path><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-8.35-6.53c-2.18 1.45-4.94 2.3-8.54 2.3-6.27 0-11.57-4.22-13.47-9.91l-8.35 6.53C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></svg>
+                    Sign in with Google
+                </button>
+                <div class="text-center mt-8">
+                    <button id="login-back-home-btn" class="text-sm text-slate-600 hover:underline">← Back to Home</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal -->
+        <div id="detail-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden-section justify-center items-start pt-10 z-50 overflow-y-auto">
+            <div class="bg-white rounded-2xl shadow-2xl w-11/12 md:w-3/4 lg:w-1/2 max-w-4xl relative mb-10" id="modal-content-wrapper">
+                <button id="close-modal-btn" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+                <div id="modal-content" class="p-8 md:p-10"></div>
+            </div>
+        </div>
+    </main>
+
+     <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-300 mt-12">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2025 EduDisha. All Rights Reserved.</p>
+            <p class="text-sm text-slate-400 mt-2">Your Personalized Career & Education Advisor</p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript File -->
+    <script type="module" src="script.js"></script>
+
+</body>
+</html>
