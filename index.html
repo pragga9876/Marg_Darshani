@@ -99,6 +99,10 @@
         <section id="quiz-section" class="hidden-section main-content-card">
             <h2 class="section-title">Career Aptitude Test</h2>
             <p class="section-subtitle">Answer these 5 questions honestly to get your personalized recommendation.</p>
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-200 rounded-full h-2.5 mb-8">
+                <div id="quiz-progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+            </div>
             <form id="quiz-form"></form>
             <div class="text-center mt-8">
                 <button id="submit-quiz-btn" class="primary-button">See My Results</button>
@@ -162,15 +166,15 @@
             </div>
         </div>
     </main>
-
-     <!-- Footer -->
+    
+    <!-- Footer -->
     <footer class="bg-slate-800 text-slate-300 mt-12">
         <div class="container mx-auto px-6 py-8 text-center">
             <p>&copy; 2025 EduDisha. All Rights Reserved.</p>
             <p class="text-sm text-slate-400 mt-2">Your Personalized Career & Education Advisor</p>
         </div>
     </footer>
-    
+
     <!-- JavaScript File -->
     <script type="module" src="script.js"></script>
 

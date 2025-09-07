@@ -1,4 +1,4 @@
-// Import Firebase modules
+// Import Firebase modules (used for the real implementation)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { 
     getAuth, 
@@ -143,8 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const form = document.getElementById('quiz-form');
         if (!form.checkValidity()) {
             console.error("Please answer all questions.");
-            form.classList.add('border-red-500', 'border-2');
-            setTimeout(() => form.classList.remove('border-red-500', 'border-2'), 2000);
+            form.reportValidity(); // Shows browser default validation messages
             return;
         }
         const formData = new FormData(form);
@@ -310,17 +309,123 @@ document.addEventListener('DOMContentLoaded', () => {
     init();
 });
 
-// --- FIREBASE SETUP & AUTH LOGIC ---
-function setupFirebaseAuth() {
+// =========================================================================================
+// --- AUTHENTICATION LOGIC ---
+// =========================================================================================
+
+// --- IMPORTANT DEVELOPMENT NOTE ---
+// To demonstrate the UI without needing a live Firebase connection, SIMULATE_LOGIN is set to true.
+// This makes the login button work for demonstration.
+//
+// TO MAKE THIS WORK FOR REAL (on a live website):
+// 1. Set SIMULATE_LOGIN to false below.
+// 2. Go to the setupRealFirebaseAuth() function further down.
+// 3. Replace the placeholder with your actual Firebase project configuration.
+const SIMULATE_LOGIN = true;
+
+
+// --- UI Update Functions ---
+function showLoggedInState(userName = 'Student') {
+    const authContainerDesktop = document.getElementById('auth-container-desktop');
+    const authContainerMobile = document.getElementById('auth-container-mobile');
+    const welcomeName = userName.split(' ')[0];
+
+    authContainerDesktop.innerHTML = `<span class="mr-4 text-sm font-medium text-slate-600">Welcome, ${welcomeName}!</span><button id="logout-btn-desktop" class="bg-red-500 text-white font-medium py-2 px-6 rounded-lg hover:bg-red-600">Logout</button>`;
+    authContainerMobile.innerHTML = `<div class="px-6 py-2 text-sm text-slate-600">Welcome, ${welcomeName}!</div><div class="p-4 pt-0"><button id="logout-btn-mobile" class="w-full bg-red-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-red-600">Logout</button></div>`;
+
+    document.getElementById('logout-btn-desktop').addEventListener('click', handleLogout);
+    document.getElementById('logout-btn-mobile').addEventListener('click', handleLogout);
+    showSection('home-section');
+}
+
+function showLoggedOutState() {
+    const authContainerDesktop = document.getElementById('auth-container-desktop');
+    const authContainerMobile = document.getElementById('auth-container-mobile');
+
+    authContainerDesktop.innerHTML = `<button id="login-btn-desktop" class="auth-button">Login</button>`;
+    authContainerMobile.innerHTML = `<button id="login-btn-mobile" class="w-full auth-button">Login</button>`;
+
+    document.getElementById('login-btn-desktop').addEventListener('click', () => showSection('login-section'));
+    document.getElementById('login-btn-mobile').addEventListener('click', () => showSection('login-section'));
+    document.getElementById('recommendations-section').classList.add('hidden-section');
+    showSection('home-section');
+}
+
+// --- Event Handlers ---
+function handleLogout() {
+    if (SIMULATE_LOGIN) {
+        console.log("Simulating logout.");
+        showLoggedOutState();
+    } else {
+        // This part runs only if using real Firebase
+        const auth = getAuth();
+        signOut(auth).catch(error => console.error("Error signing out:", error));
+    }
+}
+
+
+// --- Main Auth Setup ---
+if (SIMULATE_LOGIN) {
+    // --- Simulated Auth Logic ---
+    console.log("Auth simulation is active.");
+    document.getElementById('google-signin-btn').addEventListener('click', () => {
+        console.log("Simulating Google Sign-In...");
+        showLoggedInState("Demo User");
+    });
+    // Set initial state to logged out
+    showLoggedOutState();
+} else {
+    // --- Real Firebase Auth Logic ---
+    console.log("Real Firebase Auth is active.");
+    setupRealFirebaseAuth();
+}
+
+
+// --- REAL FIREBASE FUNCTION (Used when SIMULATE_LOGIN is false) ---
+function setupRealFirebaseAuth() {
+    // This is a placeholder for your real Firebase config.
+    // You get this from your Firebase project settings on the web.
+    // IMPORTANT: The `__firebase_config` variable is special and is
+    // automatically provided in some environments. If you are hosting
+    // this yourself, you must replace this logic with your actual config object.
     const firebaseConfigStr = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
     let auth, provider;
 
     try {
         const firebaseConfig = JSON.parse(firebaseConfigStr);
-        if (!firebaseConfig.apiKey || !firebaseConfig.authDomain) throw new Error("Firebase configuration is missing or invalid.");
+        if (!firebaseConfig.apiKey) throw new Error("Firebase configuration is missing or invalid.");
+        
         const app = initializeApp(firebaseConfig);
         auth = getAuth(app);
         provider = new GoogleAuthProvider();
+
+        document.getElementById('google-signin-btn').addEventListener('click', () => {
+            signInWithPopup(auth, provider).catch(error => {
+                console.error("Error during Google sign-in:", error.code, error.message);
+            });
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user && !user.isAnonymous) {
+                showLoggedInState(user.displayName);
+            } else {
+                showLoggedOutState();
+            }
+        });
+
+        // Attempt to sign in silently
+        (async () => {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Initial authentication failed:", error);
+            }
+        })();
+
     } catch (error) {
         console.error("Firebase Initialization Error:", error.message);
         const googleBtn = document.getElementById('google-signin-btn');
@@ -329,58 +434,6 @@ function setupFirebaseAuth() {
             googleBtn.innerHTML = `<svg class="w-6 h-6 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Login Unavailable (Config Error)`;
             googleBtn.classList.add('cursor-not-allowed', 'opacity-70');
         }
-        return;
+        showLoggedOutState();
     }
-
-    const handleGoogleSignIn = async () => {
-        try {
-            await signInWithPopup(auth, provider);
-            showSection('home-section');
-        } catch (error) {
-            console.error("Error during Google sign-in:", error.code, error.message);
-        }
-    };
-
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-            document.getElementById('recommendations-section').classList.add('hidden-section');
-            showSection('home-section');
-        } catch (error) {
-            console.error("Error signing out:", error);
-        }
-    };
-
-    onAuthStateChanged(auth, (user) => {
-        const authContainerDesktop = document.getElementById('auth-container-desktop');
-        const authContainerMobile = document.getElementById('auth-container-mobile');
-
-        if (user && !user.isAnonymous) {
-            const welcomeName = user.displayName ? user.displayName.split(' ')[0] : 'User';
-            authContainerDesktop.innerHTML = `<span class="mr-4 text-sm font-medium text-slate-600">Welcome, ${welcomeName}!</span><button id="logout-btn-desktop" class="bg-red-500 text-white font-medium py-2 px-6 rounded-lg hover:bg-red-600">Logout</button>`;
-            authContainerMobile.innerHTML = `<div class="px-6 py-2 text-sm text-slate-600">Welcome, ${user.displayName || 'User'}!</div><div class="p-4 pt-0"><button id="logout-btn-mobile" class="w-full bg-red-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-red-600">Logout</button></div>`;
-            document.getElementById('logout-btn-desktop').addEventListener('click', handleLogout);
-            document.getElementById('logout-btn-mobile').addEventListener('click', handleLogout);
-        } else {
-            authContainerDesktop.innerHTML = `<button id="login-btn-desktop" class="bg-indigo-600 text-white font-medium py-2 px-6 rounded-lg hover:bg-indigo-700">Login</button>`;
-            authContainerMobile.innerHTML = `<button id="login-btn-mobile" class="w-full bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700">Login</button>`;
-            document.getElementById('login-btn-desktop').addEventListener('click', () => showSection('login-section'));
-            document.getElementById('login-btn-mobile').addEventListener('click', () => showSection('login-section'));
-        }
-    });
-
-    document.getElementById('google-signin-btn').addEventListener('click', handleGoogleSignIn);
-
-    (async () => {
-        try {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
-                await signInAnonymously(auth);
-            }
-        } catch (error) {
-            console.error("Initial authentication failed:", error);
-        }
-    })();
 }
-setupFirebaseAuth();
