@@ -35,6 +35,7 @@
                 <a href="#colleges" class="nav-link" id="nav-colleges">Find Colleges</a>
                 <a href="#careers" class="nav-link" id="nav-careers">Career Paths</a>
                 <a href="#quiz" class="nav-link" id="nav-quiz">Aptitude Test</a>
+                <a href="#dashboard" class="nav-link hidden" id="nav-dashboard">Dashboard</a>
             </div>
             <div id="auth-container-desktop" class="hidden md:flex items-center">
                  <button id="login-btn-desktop" class="auth-button">Login</button>
@@ -49,6 +50,7 @@
             <a href="#colleges" class="mobile-nav-link" id="mobile-nav-colleges">Find Colleges</a>
             <a href="#careers" class="mobile-nav-link" id="mobile-nav-careers">Career Paths</a>
             <a href="#quiz" class="mobile-nav-link" id="mobile-nav-quiz">Aptitude Test</a>
+            <a href="#dashboard" class="mobile-nav-link hidden" id="mobile-nav-dashboard">Dashboard</a>
             <div id="auth-container-mobile" class="p-4">
                 <button id="login-btn-mobile" class="w-full auth-button">Login</button>
             </div>
@@ -156,8 +158,51 @@
             </div>
         </section>
 
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="hidden-section main-content-card">
+            <h2 class="section-title">Student Dashboard</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
+                <!-- Profile Section -->
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">Your Profile</h3>
+                    <form id="profile-form" class="space-y-4">
+                        <div>
+                            <label for="student-name" class="block text-sm font-medium text-slate-700">Name</label>
+                            <input type="text" id="student-name" class="mt-1 filter-input" placeholder="Enter your full name">
+                        </div>
+                        <div>
+                            <label for="student-age" class="block text-sm font-medium text-slate-700">Age</label>
+                            <input type="number" id="student-age" class="mt-1 filter-input" placeholder="Enter your age">
+                        </div>
+                        <div>
+                            <label for="student-gender" class="block text-sm font-medium text-slate-700">Gender</label>
+                            <select id="student-gender" class="mt-1 filter-input">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="student-location" class="block text-sm font-medium text-slate-700">Location</label>
+                            <input type="text" id="student-location" class="mt-1 filter-input" placeholder="e.g., Kolkata, West Bengal">
+                        </div>
+                        <button type="submit" id="save-profile-btn" class="w-full bg-indigo-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors">Save Profile</button>
+                    </form>
+                </div>
+                <!-- Saved Colleges Section -->
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">Saved Colleges</h3>
+                    <div id="saved-colleges-list" class="space-y-3 max-h-96 overflow-y-auto pr-2">
+                        <p class="text-slate-500">You haven't saved any colleges yet. Explore the college directory and save your favorites!</p>
+                        <!-- Saved colleges will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Modal -->
-        <div id="detail-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden-section justify-center items-start pt-10 z-50 overflow-y-auto">
+        <div id="detail-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden justify-center items-start pt-10 z-50 overflow-y-auto">
             <div class="bg-white rounded-2xl shadow-2xl w-11/12 md:w-3/4 lg:w-1/2 max-w-4xl relative mb-10" id="modal-content-wrapper">
                 <button id="close-modal-btn" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>

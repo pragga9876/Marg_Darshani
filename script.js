@@ -1,4 +1,4 @@
-// Import Firebase modules (used for the real implementation)
+// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { 
     getAuth, 
@@ -9,6 +9,27 @@ import {
     signInAnonymously,
     signInWithCustomToken
 } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { 
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+
+// --- GLOBAL VARIABLES ---
+let auth;
+let db;
+// Data store for simulation mode
+let simulatedUserData = {
+    profile: {
+        name: 'subhajit sen',
+        age: 20,
+        gender: 'Male',
+        location: 'kolkata'
+    },
+    savedColleges: []
+};
 
 
 // --- GLOBAL UI HELPER ---
@@ -16,9 +37,9 @@ function showSection(sectionId) {
     const sections = document.querySelectorAll('main > section');
     sections.forEach(section => {
         if (section.id === sectionId) {
-            section.classList.remove('hidden-section');
+            section.classList.remove('hidden');
         } else {
-            section.classList.add('hidden-section');
+            section.classList.add('hidden');
         }
     });
     window.scrollTo(0, 0); // Scroll to top on section change
@@ -27,6 +48,9 @@ function showSection(sectionId) {
 
 // --- MAIN APPLICATION LOGIC ---
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Expose functions needed globally for simulation
+    window.eduDishaApp = {};
 
     // --- DATA ---
     // Using RIASEC model: Realistic, Investigative, Artistic, Social, Enterprising, Conventional
@@ -113,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#nav-colleges, #mobile-nav-colleges').forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); showSection('colleges-section'); }));
     document.querySelectorAll('#nav-careers, #mobile-nav-careers').forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); showSection('careers-section'); }));
     document.querySelectorAll('#nav-quiz, #mobile-nav-quiz, #start-quiz-btn').forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); showSection('quiz-section'); }));
+    document.querySelectorAll('#nav-dashboard, #mobile-nav-dashboard').forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); showSection('dashboard-section'); }));
     document.getElementById('explore-colleges-btn').addEventListener('click', () => showSection('colleges-section'));
     document.getElementById('go-home-btn').addEventListener('click', () => showSection('home-section'));
     document.getElementById('login-back-home-btn').addEventListener('click', () => showSection('home-section'));
@@ -142,8 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('submit-quiz-btn').addEventListener('click', () => {
         const form = document.getElementById('quiz-form');
         if (!form.checkValidity()) {
-            console.error("Please answer all questions.");
-            form.reportValidity(); // Shows browser default validation messages
+            form.reportValidity();
             return;
         }
         const formData = new FormData(form);
@@ -203,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>`).join('') || '<p class="text-slate-500">Explore all career paths!</p>'}
                 </div>
             </div>`;
-        recSection.classList.remove('hidden-section');
+        recSection.classList.remove('hidden');
     }
 
     // --- COLLEGE DIRECTORY ---
@@ -242,7 +266,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div><h4 class="font-semibold text-slate-800">Last Year's Cut-off (Approx):</h4><p class="text-slate-600">${college.cutoff}</p></div>
                     <div><h4 class="font-semibold text-slate-800">Facilities:</h4><p class="text-slate-600">${college.facilities.join(', ')}</p></div>
                 </div>
+                 <div class="mt-8 text-center"><button id="save-college-btn" class="primary-button">Save to My List</button></div>
             </div>`;
+        
+        document.getElementById('save-college-btn').addEventListener('click', () => saveCollege(id));
         modal.style.display = 'flex';
     }
 
@@ -278,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3 class="text-xl font-bold text-slate-800">${path}</h3>
             </div>`).join('');
     }
-    
+
     window.showCareerDetails = function(path) {
         const data = careerPaths[path];
         modalContent.innerHTML = `
@@ -298,8 +325,183 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.id === 'detail-modal') modal.style.display = 'none';
     });
 
+    // --- DASHBOARD & PROFILE ---
+    async function loadStudentDashboard(userId) {
+         if (SIMULATE_LOGIN) {
+            console.log("Loading dashboard from simulated data.");
+            const data = simulatedUserData;
+            document.getElementById('student-name').value = data.profile.name || '';
+            document.getElementById('student-age').value = data.profile.age || '';
+            document.getElementById('student-gender').value = data.profile.gender || '';
+            document.getElementById('student-location').value = data.profile.location || '';
+            
+            const savedCollegesList = document.getElementById('saved-colleges-list');
+            if (data.savedColleges && data.savedColleges.length > 0) {
+                savedCollegesList.innerHTML = '';
+                data.savedColleges.forEach(collegeId => {
+                    const college = colleges.find(c => c.id === collegeId);
+                    if (college) {
+                        const collegeEl = document.createElement('div');
+                        collegeEl.className = 'bg-slate-100 p-3 rounded-lg flex justify-between items-center';
+                        collegeEl.innerHTML = `<div><p class="font-semibold">${college.name}</p><p class="text-sm text-slate-500">${college.location}</p></div><button class="text-red-500 hover:text-red-700 text-sm font-medium">Remove</button>`;
+                        collegeEl.querySelector('button').addEventListener('click', () => removeSavedCollege(collegeId));
+                        savedCollegesList.appendChild(collegeEl);
+                    }
+                });
+            } else {
+                 savedCollegesList.innerHTML = '<p class="text-slate-500">You haven\'t saved any colleges yet. Explore the college directory and save your favorites!</p>';
+            }
+            return;
+        }
+
+        const userDocRef = doc(db, "students", userId);
+        const docSnap = await getDoc(userDocRef);
+
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            document.getElementById('student-name').value = data.name || '';
+            document.getElementById('student-age').value = data.age || '';
+            document.getElementById('student-gender').value = data.gender || '';
+            document.getElementById('student-location').value = data.location || '';
+            
+            // Load saved colleges
+            const savedCollegesList = document.getElementById('saved-colleges-list');
+            if (data.savedColleges && data.savedColleges.length > 0) {
+                savedCollegesList.innerHTML = '';
+                data.savedColleges.forEach(collegeId => {
+                    const college = colleges.find(c => c.id === collegeId);
+                    if (college) {
+                        const collegeEl = document.createElement('div');
+                        collegeEl.className = 'bg-slate-100 p-3 rounded-lg flex justify-between items-center';
+                        collegeEl.innerHTML = `<div><p class="font-semibold">${college.name}</p><p class="text-sm text-slate-500">${college.location}</p></div><button class="text-red-500 hover:text-red-700 text-sm font-medium">Remove</button>`;
+                        collegeEl.querySelector('button').addEventListener('click', () => removeSavedCollege(collegeId));
+                        savedCollegesList.appendChild(collegeEl);
+                    }
+                });
+            } else {
+                 savedCollegesList.innerHTML = '<p class="text-slate-500">You haven\'t saved any colleges yet.</p>';
+            }
+        }
+    }
+    window.eduDishaApp.loadStudentDashboard = loadStudentDashboard;
+
+    document.getElementById('profile-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (SIMULATE_LOGIN) {
+            simulatedUserData.profile.name = document.getElementById('student-name').value;
+            simulatedUserData.profile.age = document.getElementById('student-age').value;
+            simulatedUserData.profile.gender = document.getElementById('student-gender').value;
+            simulatedUserData.profile.location = document.getElementById('student-location').value;
+            console.log("Simulated profile saved:", simulatedUserData.profile);
+            const saveBtn = document.getElementById('save-profile-btn');
+            saveBtn.textContent = 'Profile Saved!';
+            setTimeout(() => { saveBtn.textContent = 'Save Profile'; }, 2000);
+            return;
+        }
+
+
+        const user = auth.currentUser;
+        if (!user) {
+            console.error("No user logged in to save profile.");
+            return;
+        }
+
+        const profileData = {
+            name: document.getElementById('student-name').value,
+            age: document.getElementById('student-age').value,
+            gender: document.getElementById('student-gender').value,
+            location: document.getElementById('student-location').value
+        };
+
+        try {
+            await setDoc(doc(db, "students", user.uid), profileData, { merge: true });
+            const saveBtn = document.getElementById('save-profile-btn');
+            saveBtn.textContent = 'Profile Saved!';
+            setTimeout(() => { saveBtn.textContent = 'Save Profile'; }, 2000);
+        } catch (error) {
+            console.error("Error saving profile: ", error);
+        }
+    });
+
+    async function saveCollege(collegeId) {
+        if (SIMULATE_LOGIN) {
+            console.log(`Simulating saving college ${collegeId}`);
+            const saveBtn = document.getElementById('save-college-btn');
+            saveBtn.disabled = true;
+
+            if (!simulatedUserData.savedColleges.includes(collegeId)) {
+                simulatedUserData.savedColleges.push(collegeId);
+                saveBtn.textContent = 'Saved!';
+                window.eduDishaApp.loadStudentDashboard('fakeUserId'); // Refresh dashboard
+            } else {
+                saveBtn.textContent = 'Already Saved';
+            }
+             setTimeout(() => { 
+                modal.style.display = 'none'; 
+            }, 1000);
+            return;
+        }
+
+        const user = auth.currentUser;
+        if (!user || user.isAnonymous) {
+            showSection('login-section');
+            return;
+        }
+
+        const userDocRef = doc(db, "students", user.uid);
+        const saveBtn = document.getElementById('save-college-btn');
+        saveBtn.disabled = true;
+
+        try {
+            const docSnap = await getDoc(userDocRef);
+            let savedColleges = [];
+            if (docSnap.exists() && docSnap.data().savedColleges) {
+                savedColleges = docSnap.data().savedColleges;
+            }
+
+            if (!savedColleges.includes(collegeId)) {
+                savedColleges.push(collegeId);
+                await setDoc(userDocRef, { savedColleges }, { merge: true });
+                saveBtn.textContent = 'Saved!';
+                window.eduDishaApp.loadStudentDashboard(user.uid); // Refresh dashboard
+            } else {
+                saveBtn.textContent = 'Already Saved';
+            }
+        } catch (error) {
+            console.error("Error saving college: ", error);
+            saveBtn.textContent = 'Error!';
+        }
+    }
+    
+    async function removeSavedCollege(collegeId) {
+        if (SIMULATE_LOGIN) {
+            console.log(`Simulating removing college ${collegeId}`);
+            simulatedUserData.savedColleges = simulatedUserData.savedColleges.filter(id => id !== collegeId);
+            window.eduDishaApp.loadStudentDashboard('fakeUserId');
+            return;
+        }
+
+         const user = auth.currentUser;
+        if (!user || user.isAnonymous) return;
+        
+        const userDocRef = doc(db, "students", user.uid);
+        try {
+            const docSnap = await getDoc(userDocRef);
+            if (docSnap.exists()) {
+                let savedColleges = docSnap.data().savedColleges || [];
+                const updatedColleges = savedColleges.filter(id => id !== collegeId);
+                await setDoc(userDocRef, { savedColleges: updatedColleges }, { merge: true });
+                window.eduDishaApp.loadStudentDashboard(user.uid); // Refresh the list
+            }
+        } catch(error) {
+            console.error("Error removing college:", error);
+        }
+    }
+
     // --- INITIALIZATION ---
     function init() {
+        setupAuth();
         loadQuiz();
         displayColleges(colleges);
         populateFilters();
@@ -319,19 +521,41 @@ document.addEventListener('DOMContentLoaded', () => {
 //
 // TO MAKE THIS WORK FOR REAL (on a live website):
 // 1. Set SIMULATE_LOGIN to false below.
-// 2. Go to the setupRealFirebaseAuth() function further down.
-// 3. Replace the placeholder with your actual Firebase project configuration.
+// 2. Ensure your Firebase project configuration is correctly provided.
 const SIMULATE_LOGIN = true;
 
+function setupAuth() {
+    if (SIMULATE_LOGIN) {
+        // --- Simulated Auth Logic ---
+        console.log("Auth simulation is active.");
+        document.getElementById('google-signin-btn').addEventListener('click', () => {
+            console.log("Simulating Google Sign-In...");
+            const fakeUser = { displayName: "Demo User" };
+            showLoggedInState(fakeUser);
+            // Simulate loading dashboard for a fake user, so you can test dashboard functionality
+            const { loadStudentDashboard } = window.eduDishaApp;
+            if(loadStudentDashboard) loadStudentDashboard('fakeUserIdForTesting');
+        });
+        // Set initial state to logged out
+        showLoggedOutState();
+    } else {
+        // --- Real Firebase Auth Logic ---
+        console.log("Real Firebase Auth is active.");
+        setupRealFirebaseAuth();
+    }
+}
 
-// --- UI Update Functions ---
-function showLoggedInState(userName = 'Student') {
+
+function showLoggedInState(user) {
     const authContainerDesktop = document.getElementById('auth-container-desktop');
     const authContainerMobile = document.getElementById('auth-container-mobile');
-    const welcomeName = userName.split(' ')[0];
+    const welcomeName = user.displayName.split(' ')[0];
 
     authContainerDesktop.innerHTML = `<span class="mr-4 text-sm font-medium text-slate-600">Welcome, ${welcomeName}!</span><button id="logout-btn-desktop" class="bg-red-500 text-white font-medium py-2 px-6 rounded-lg hover:bg-red-600">Logout</button>`;
     authContainerMobile.innerHTML = `<div class="px-6 py-2 text-sm text-slate-600">Welcome, ${welcomeName}!</div><div class="p-4 pt-0"><button id="logout-btn-mobile" class="w-full bg-red-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-red-600">Logout</button></div>`;
+    
+    document.getElementById('nav-dashboard').classList.remove('hidden');
+    document.getElementById('mobile-nav-dashboard').classList.remove('hidden');
 
     document.getElementById('logout-btn-desktop').addEventListener('click', handleLogout);
     document.getElementById('logout-btn-mobile').addEventListener('click', handleLogout);
@@ -345,51 +569,27 @@ function showLoggedOutState() {
     authContainerDesktop.innerHTML = `<button id="login-btn-desktop" class="auth-button">Login</button>`;
     authContainerMobile.innerHTML = `<button id="login-btn-mobile" class="w-full auth-button">Login</button>`;
 
+    document.getElementById('nav-dashboard').classList.add('hidden');
+    document.getElementById('mobile-nav-dashboard').classList.add('hidden');
+
     document.getElementById('login-btn-desktop').addEventListener('click', () => showSection('login-section'));
     document.getElementById('login-btn-mobile').addEventListener('click', () => showSection('login-section'));
-    document.getElementById('recommendations-section').classList.add('hidden-section');
+    document.getElementById('recommendations-section').classList.add('hidden');
     showSection('home-section');
 }
 
-// --- Event Handlers ---
 function handleLogout() {
-    if (SIMULATE_LOGIN) {
-        console.log("Simulating logout.");
+    if(SIMULATE_LOGIN) {
+        console.log('Simulating logout');
         showLoggedOutState();
-    } else {
-        // This part runs only if using real Firebase
-        const auth = getAuth();
-        signOut(auth).catch(error => console.error("Error signing out:", error));
+        return;
     }
+    signOut(auth).catch(error => console.error("Error signing out:", error));
 }
 
-
-// --- Main Auth Setup ---
-if (SIMULATE_LOGIN) {
-    // --- Simulated Auth Logic ---
-    console.log("Auth simulation is active.");
-    document.getElementById('google-signin-btn').addEventListener('click', () => {
-        console.log("Simulating Google Sign-In...");
-        showLoggedInState("Demo User");
-    });
-    // Set initial state to logged out
-    showLoggedOutState();
-} else {
-    // --- Real Firebase Auth Logic ---
-    console.log("Real Firebase Auth is active.");
-    setupRealFirebaseAuth();
-}
-
-
-// --- REAL FIREBASE FUNCTION (Used when SIMULATE_LOGIN is false) ---
 function setupRealFirebaseAuth() {
-    // This is a placeholder for your real Firebase config.
-    // You get this from your Firebase project settings on the web.
-    // IMPORTANT: The `__firebase_config` variable is special and is
-    // automatically provided in some environments. If you are hosting
-    // this yourself, you must replace this logic with your actual config object.
     const firebaseConfigStr = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
-    let auth, provider;
+    let provider;
 
     try {
         const firebaseConfig = JSON.parse(firebaseConfigStr);
@@ -397,6 +597,7 @@ function setupRealFirebaseAuth() {
         
         const app = initializeApp(firebaseConfig);
         auth = getAuth(app);
+        db = getFirestore(app);
         provider = new GoogleAuthProvider();
 
         document.getElementById('google-signin-btn').addEventListener('click', () => {
@@ -407,13 +608,14 @@ function setupRealFirebaseAuth() {
 
         onAuthStateChanged(auth, (user) => {
             if (user && !user.isAnonymous) {
-                showLoggedInState(user.displayName);
+                showLoggedInState(user);
+                const { loadStudentDashboard } = window.eduDishaApp;
+                if(loadStudentDashboard) loadStudentDashboard(user.uid);
             } else {
                 showLoggedOutState();
             }
         });
 
-        // Attempt to sign in silently
         (async () => {
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
