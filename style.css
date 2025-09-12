@@ -278,7 +278,7 @@ body.dark {
     font-weight: bold;
     font-size: 1.25rem;
     transition: opacity 0.3s ease;
-    aria-hidden: true;
+    area-hidden: true;
 }
 
 /* --- Login Page Enhancements --- */
@@ -320,6 +320,15 @@ body.dark {
 }
 
 /* --- Admin Panel Styles --- */
+.admin-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    border: 1px solid #dee2e6;
+    padding: 3rem;
+}
+
 #admin-container .form-label {
     display: block;
     margin-bottom: 0.25rem;
@@ -343,9 +352,12 @@ body.dark {
     box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.25);
 }
 
-#admin-container #college-list-container > div {
+.admin-list-item {
     background-color: #f8f9fa;
     padding: 1rem;
     border-radius: 0.5rem;
     border: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

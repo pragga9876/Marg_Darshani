@@ -4,51 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduDisha - Admin Panel</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- This line links the admin page to your main stylesheet -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
 </head>
-<body class="bg-slate-50">
+<body class="admin-page">
 
-    <!-- This is shown to unauthorized users -->
-    <div id="auth-gate" class="text-center p-12">
-        <h2 class="text-2xl font-bold text-slate-800">Admin Access Required</h2>
-        <p class="text-slate-600 mt-2">Please sign in with an administrator account to access this page.</p>
-        <div class="mt-6">
-             <a href="index.html" class="mt-4 inline-block bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Go to Main Site to Login</a>
+    <div id="auth-gate" class="min-h-screen flex items-center justify-center p-4">
+        <div class="main-content-card text-center max-w-md w-full">
+            <h2 class="section-title">Access Denied</h2>
+            <p class="section-subtitle">You do not have permission to view this page. Please sign in as an administrator.</p>
+            <a href="index.html" class="primary-button inline-block">Go to Main Site to Login</a>
         </div>
     </div>
 
-    <!-- This is shown only to admins -->
-    <div id="admin-container" class="container mx-auto p-4 sm:p-8 max-w-7xl hidden">
+    <div id="admin-container" class="hidden container mx-auto p-4 md:p-8">
         <header class="flex justify-between items-center mb-8">
             <h1 class="text-3xl font-bold text-slate-800">College Admin Panel</h1>
-            <a href="index.html" class="text-sm text-indigo-600 hover:underline">&larr; Back to Main Site</a>
+            <a href="index.html" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors">&larr; Back to Main Site</a>
         </header>
 
-        <main class="grid grid-cols-1 lg:grid-cols-5 gap-8">
-            <!-- Form for Adding/Editing Colleges -->
-            <section class="bg-white p-6 sm:p-8 rounded-xl shadow-lg lg:col-span-3">
-                <h2 id="form-title" class="text-2xl font-semibold mb-6">Add New College</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            
+            <!-- Add/Edit College Form Card -->
+            <div class="admin-card">
+                <h2 id="form-title" class="text-2xl font-bold mb-6 text-slate-700">Add New College</h2>
                 <form id="college-form" class="space-y-4">
-                    <input type="hidden" id="college-id">
                     
                     <div>
                         <label for="college-name" class="form-label">College Name</label>
                         <input type="text" id="college-name" class="form-input" required>
                     </div>
 
-                    <div>
-                        <label for="college-location" class="form-label">Location</label>
-                        <input type="text" id="college-location" class="form-input" placeholder="e.g., Srinagar, J&K" required>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="college-location" class="form-label">Location</label>
+                            <input type="text" id="college-location" class="form-input" placeholder="e.g., Srinagar, J&K" required>
+                        </div>
+                        <div>
+                            <label for="college-cutoff" class="form-label">Cutoff</label>
+                            <input type="text" id="college-cutoff" class="form-input" placeholder="e.g., 85% or Varies">
+                        </div>
                     </div>
-                    
+
                     <div>
                         <label for="college-streams" class="form-label">Streams (comma-separated)</label>
                         <input type="text" id="college-streams" class="form-input" placeholder="e.g., Science, Arts, Commerce">
@@ -58,30 +61,26 @@
                         <label for="college-courses" class="form-label">Courses (comma-separated)</label>
                         <textarea id="college-courses" class="form-input" rows="3" placeholder="e.g., B.Sc Physics, B.A History"></textarea>
                     </div>
-
+                    
                     <div>
                         <label for="college-facilities" class="form-label">Facilities (comma-separated)</label>
                         <input type="text" id="college-facilities" class="form-input" placeholder="e.g., Hostel, Lab, Library">
                     </div>
-                    
-                    <div>
-                        <label for="college-cutoff" class="form-label">Cutoff</label>
-                        <input type="text" id="college-cutoff" class="form-input" placeholder="e.g., 85% or Varies">
-                    </div>
 
-                     <div>
+                    <div>
                         <label for="college-contact" class="form-label">Contact Numbers (comma-separated)</label>
                         <input type="text" id="college-contact" class="form-input" placeholder="e.g., 0194-2476828, 9419010839">
                     </div>
 
-                    <div>
-                        <label for="college-website" class="form-label">Website URL</label>
-                        <input type="url" id="college-website" class="form-input" placeholder="e.g., https://www.example.com">
-                    </div>
-
-                    <div>
-                        <label for="college-email" class="form-label">Email Address</label>
-                        <input type="email" id="college-email" class="form-input" placeholder="e.g., principal@example.com">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="college-website" class="form-label">Website URL</label>
+                            <input type="url" id="college-website" class="form-input" placeholder="e.g., https://www.example.com">
+                        </div>
+                        <div>
+                            <label for="college-email" class="form-label">Email Address</label>
+                            <input type="email" id="college-email" class="form-input" placeholder="e.g., principal@example.com">
+                        </div>
                     </div>
 
                     <div>
@@ -89,24 +88,36 @@
                         <input type="url" id="college-image" class="form-input" placeholder="https://placehold.co/600x400">
                     </div>
                     
-                    <div class="pt-4 flex items-center gap-4">
-                        <button type="submit" id="submit-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors">Add College</button>
-                        <button type="button" id="cancel-btn" class="w-full bg-slate-200 text-slate-800 font-bold py-3 px-4 rounded-lg hover:bg-slate-300 transition-colors hidden">Cancel</button>
+                    <div class="pt-2">
+                        <button type="submit" class="w-full primary-button">Add College</button>
+                        <p id="form-status" class="text-center mt-3 text-sm font-medium"></p>
                     </div>
                 </form>
-                <p id="form-status" class="text-center mt-4 font-medium"></p>
-            </section>
+            </div>
 
-            <!-- List of Existing Colleges -->
-            <aside class="bg-white p-6 sm:p-8 rounded-xl shadow-lg lg:col-span-2">
-                <h2 class="text-2xl font-semibold mb-6">Existing Colleges</h2>
-                <div id="college-list-container" class="space-y-3 max-h-[75vh] overflow-y-auto pr-2">
-                    <p class="text-slate-500">Loading colleges...</p>
+            <!-- Existing Data Lists -->
+            <div class="space-y-8">
+                <!-- Existing Colleges Card -->
+                <div class="admin-card">
+                    <h2 class="text-2xl font-bold mb-4 text-slate-700">Existing Colleges</h2>
+                    <div id="existing-colleges-list" class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                        <p class="text-slate-500">Loading colleges...</p>
+                    </div>
                 </div>
-            </aside>
-        </main>
+
+                <!-- Student Data Card -->
+                <div class="admin-card">
+                    <h2 class="text-2xl font-bold mb-4 text-slate-700">Student Data & Choices</h2>
+                    <div id="student-list" class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                         <p class="text-slate-500">Loading student data...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
     
     <script type="module" src="js/admin.js"></script>
 </body>
 </html>
+

@@ -1,9 +1,9 @@
 // js/data.js
 
-// --- APTITUDE TEST DATA (RIASEC MODEL) ---
+// --- APTITUDE TEST DATA ---
 export const quizQuestions = [
     {
-        question: "1. Which activity sounds most enjoyable to you?",
+        question: "Which activity sounds most enjoyable to you?",
         options: [
             { text: "Building or repairing things", trait: 'R' },
             { text: "Solving complex math or science problems", trait: 'I' },
@@ -12,7 +12,7 @@ export const quizQuestions = [
         ]
     },
     {
-        question: "2. In a team project, you prefer to...",
+        question: "In a team project, you prefer to...",
         options: [
             { text: "Lead the team and persuade others", trait: 'E' },
             { text: "Organize the files, data, and schedule", trait: 'C' },
@@ -21,7 +21,7 @@ export const quizQuestions = [
         ]
     },
     {
-        question: "3. You are most comfortable working with...",
+        question: "You are most comfortable working with...",
         options: [
             { text: "People and helping them with their problems", trait: 'S' },
             { text: "Data, numbers, and clear instructions", trait: 'C' },
@@ -30,7 +30,7 @@ export const quizQuestions = [
         ]
     },
     {
-        question: "4. Which of these describes you best?",
+        question: "Which of these describes you best?",
         options: [
             { text: "Ambitious and influential", trait: 'E' },
             { text: "Practical and down-to-earth", trait: 'R' },
@@ -39,113 +39,23 @@ export const quizQuestions = [
         ]
     },
     {
-        question: "5. Your ideal work environment would be...",
+        question: "Your ideal work environment would be...",
         options: [
             { text: "A structured office with clear tasks", trait: 'C' },
             { text: "A dynamic place where you can influence decisions", trait: 'E' },
             { text: "A school, hospital, or counseling center", trait: 'S' },
             { text: "A design studio, theater, or concert hall", trait: 'A' }
         ]
-    },
-    {
-        question: "6. What kind of TV show or movie do you prefer?",
-        options: [
-            { text: "A documentary about social issues", trait: 'S' },
-            { text: "A science fiction movie with complex theories", trait: 'I' },
-            { text: "A show about entrepreneurs building a business", trait: 'E' },
-            { text: "A home improvement or car restoration show", trait: 'R' }
-        ]
-    },
-    {
-        question: "7. When learning something new, you prefer to...",
-        options: [
-            { text: "Read books and research the topic thoroughly", trait: 'I' },
-            { text: "Take it apart and see how it works", trait: 'R' },
-            { text: "Imagine new ways to use the information", trait: 'A' },
-            { text: "Follow a step-by-step instruction manual", trait: 'C' }
-        ]
-    },
-    {
-        question: "8. Which of these sounds like a fun weekend activity?",
-        options: [
-            { text: "Visiting an art museum or attending a concert", trait: 'A' },
-            { text: "Volunteering for a local charity", trait: 'S' },
-            { text: "Organizing a group event or a small get-together", trait: 'E' },
-            { text: "Tidying up your room and organizing your files", trait: 'C' }
-        ]
-    },
-    {
-        question: "9. A friend needs help with a project. What role do you take?",
-        options: [
-            { text: "I listen to their problems and offer emotional support", trait: 'S' },
-            { text: "I analyze the problem and suggest logical solutions", trait: 'I' },
-            { text: "I help with the physical tasks and building", trait: 'R' },
-            { text: "I take charge and delegate tasks to get it done", trait: 'E' }
-        ]
-    },
-    {
-        question: "10. What kind of work task would you find most satisfying?",
-        options: [
-            { text: "Creating a perfectly organized spreadsheet", trait: 'C' },
-            { text: "Designing a visually appealing presentation", trait: 'A' },
-            { text: "Negotiating a deal or making a sale", trait: 'E' },
-            { text: "Discovering a new pattern in a set of data", trait: 'I' }
-        ]
-    },
-    {
-        question: "11. You are given a new gadget. Your first instinct is to...",
-        options: [
-            { text: "Start using it right away, figuring it out as you go", trait: 'R' },
-            { text: "Read the entire manual to understand all its features", trait: 'I' },
-            { text: "Think about how you could customize or change it", trait: 'A' },
-            { text: "Show it to your friends and see what they think", trait: 'S' }
-        ]
-    },
-    {
-        question: "12. Which job sounds most appealing?",
-        options: [
-            { text: "Carpenter or Electrician", trait: 'R' },
-            { text: "Scientist or Researcher", trait: 'I' },
-            { text: "Musician or Graphic Designer", trait: 'A' },
-            { text: "Teacher or Counselor", trait: 'S' }
-        ]
-    },
-    {
-        question: "13. In a group discussion, you are most likely to...",
-        options: [
-            { text: "Persuade others to see your point of view", trait: 'E' },
-            { text: "Take detailed notes and keep track of decisions", trait: 'C' },
-            { text: "Make sure everyone feels included and heard", trait: 'S' },
-            { text: "Ask probing questions to understand the topic better", trait: 'I' }
-        ]
-    },
-    {
-        question: "14. What type of video game do you prefer?",
-        options: [
-            { text: "A complex strategy or puzzle game", trait: 'I' },
-            { text: "A building and survival game like Minecraft", trait: 'R' },
-            { text: "A game with a rich story and character customization", trait: 'A' },
-            { text: "A competitive multiplayer or business simulation game", trait: 'E' }
-        ]
-    },
-    {
-        question: "15. You are planning a holiday. What is your priority?",
-        options: [
-            { text: "Going somewhere with unique culture and art", trait: 'A' },
-            { text: "Having a detailed itinerary and everything planned out", trait: 'C' },
-            { text: "Doing an activity like hiking or camping", trait: 'R' },
-            { text: "Traveling with a group of friends or family", trait: 'S' }
-        ]
     }
 ];
 
 export const traitDescriptions = {
-    R: { name: 'Realistic (The Doer)', stream: 'Vocational', description: 'You are practical, hands-on, and like working with tools, machines, or animals. You enjoy physical tasks and tangible results.', color: 'bg-teal-100', textColor: 'text-teal-800' },
+    R: { name: 'Realistic (The Doer)', stream: 'Science / Vocational', description: 'You are practical, hands-on, and like working with tools, machines, or animals. You enjoy physical tasks and tangible results.', color: 'bg-green-100', textColor: 'text-green-800' },
     I: { name: 'Investigative (The Thinker)', stream: 'Science', description: 'You are analytical, curious, and enjoy solving complex problems. You are drawn to ideas, research, and scientific discovery.', color: 'bg-blue-100', textColor: 'text-blue-800' },
     A: { name: 'Artistic (The Creator)', stream: 'Arts', description: 'You are creative, imaginative, and expressive. You enjoy working in unstructured environments and using your creativity to produce art, music, or writing.', color: 'bg-purple-100', textColor: 'text-purple-800' },
-    S: { name: 'Social (The Helper)', stream: 'Humanities', description: 'You are empathetic, cooperative, and enjoy helping, teaching, and caring for others. You thrive in collaborative social or educational environments.', color: 'bg-pink-100', textColor: 'text-pink-800' },
+    S: { name: 'Social (The Helper)', stream: 'Arts', description: 'You are empathetic, cooperative, and enjoy helping, teaching, and caring for others. You thrive in collaborative environments.', color: 'bg-pink-100', textColor: 'text-pink-800' },
     E: { name: 'Enterprising (The Persuader)', stream: 'Commerce', description: 'You are ambitious, outgoing, and enjoy leading and influencing people. You are drawn to business, sales, and management roles.', color: 'bg-orange-100', textColor: 'text-orange-800' },
-    C: { name: 'Conventional (The Organizer)', stream: 'Technology', description: 'You are organized, detail-oriented, and enjoy working with data, systems, and following set procedures. A career in IT or data management would suit you.', color: 'bg-gray-100', textColor: 'text-gray-800' }
+    C: { name: 'Conventional (The Organizer)', stream: 'Commerce', description: 'You are organized, detail-oriented, and enjoy working with data and following set procedures. You value accuracy and efficiency.', color: 'bg-gray-100', textColor: 'text-gray-800' }
 };
 
 
@@ -161,27 +71,72 @@ export const careerPaths = {
         privateJobs: ["Software Development Engineer (SDE)", "Data Scientist", "Cybersecurity Analyst", "Cloud Engineer", "Machine Learning Engineer"],
         higherStudies: ["M.Tech in Computer Science", "MS from abroad", "MBA (Master of Business Administration)"]
     },
-    "B.A. Economics (Hons)": {
-        description: "Focuses on the principles of economics and their application in the real world, including microeconomics, macroeconomics, and econometrics.",
-        govJobs: ["Indian Economic Service (IES)", "RBI Grade B Officer", "NITI Aayog"],
-        privateJobs: ["Financial Analyst", "Market Research Analyst", "Management Consultant"],
-        higherStudies: ["M.A. in Economics", "MBA", "Ph.D. in Economics"]
-    },
-    "B.Sc. in IT": {
-        description: "Deals with the software, databases, and networking aspects of computing and information technology.",
-        govJobs: ["IT Officer in Banks/PSUs", "NIC Scientist", "Systems Analyst"],
-        privateJobs: ["IT Consultant", "Cloud Administrator", "Network Engineer", "Database Administrator"],
-        higherStudies: ["M.Sc. in IT", "MCA", "M.Tech"]
-    },
-    "Journalism & Mass Comm.": {
-        description: "Covers various aspects of media, including print, broadcast, and digital journalism, advertising, and public relations.",
-        govJobs: ["Press Information Bureau (PIB)", "Doordarshan / All India Radio", "Public Relations Officer"],
-        privateJobs: ["Reporter", "Content Strategist", "Copywriter", "Public Relations Specialist"],
-        higherStudies: ["M.A. in Journalism & Mass Communication", "PG Diploma in Advertising"]
-    }
 };
 
 
-// --- FIND COLLEGES DATA ---
-// This will be populated from Firestore by colleges.js
-export let colleges = [];
+// --- COMPLETE AND UPDATED COLLEGES DATA ---
+export const colleges = [
+    { "id": 1, "name": "S.P. College Srinagar", "location": "Srinagar", "streams": ["Science", "Vocational"], "courses": ["Bio-Chemistry", "IT", "B.Sc-IT", "Bio-Tech", "Environmental Science and Water Management", "Zoology", "Chemistry"], "contact_numbers": ["0194-2476828", "9419010839"], "website": "www.spcollege.edu.in", "email": "spcsgr1905@gmail.com", "cutoff": "Varies", "facilities": ["Library", "Labs", "Hostel"], "image": "https://placehold.co/600x400/6366f1/ffffff?text=SP+College" },
+    { "id": 2, "name": "A.S. College Srinagar", "location": "Srinagar", "streams": ["Arts", "Science", "Vocational", "Commerce"], "courses": ["BCA", "Computer Applications", "Functional English", "Social Studies", "Environmental Science", "Tourism & Commerce", "PG in Geography"], "contact_numbers": ["0194-2311674", "9419064621"], "website": "www.amarsinghcollege.ac.in", "email": "info@amarsinghcollege.ac.in", "cutoff": "Varies", "facilities": ["Library", "Labs", "Canteen"], "image": "https://placehold.co/600x400/10b981/ffffff?text=AS+College" },
+    { "id": 3, "name": "COE Srinagar", "location": "Srinagar", "streams": ["Vocational", "Arts"], "courses": ["B.Ed", "Computer Applications", "M.Ed"], "contact_numbers": ["0194-2478907", "9419012022"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library", "Auditorium"], "image": "https://placehold.co/600x400/f59e0b/ffffff?text=COE+Srinagar" },
+    { "id": 4, "name": "Women College, M. A. Road, Srinagar", "location": "Srinagar", "streams": ["Science", "Arts", "Vocational"], "courses": ["Industrial Chemistry", "Home Science", "Bio-Chemistry", "Bio-Technology", "BCA", "Environmental Science", "English"], "contact_numbers": ["0194-2479432", "9419012127"], "website": "www.gcwmaroad.ac.in", "email": "gcwmaroad@yahoo.in", "cutoff": "Varies", "facilities": ["Library", "Hostel", "Labs"], "image": "https://placehold.co/600x400/ef4444/ffffff?text=Women+College" },
+    { "id": 5, "name": "Women College Nawakadal, Srinagar", "location": "Srinagar", "streams": ["Arts", "Science", "Commerce", "Vocational"], "courses": ["Tourism", "Environmental Science", "BBA"], "contact_numbers": ["0194-2479156", "9419073979"], "website": "www.gcwnk.ac.in", "email": "principal@gcwnk.ac.in", "cutoff": "Varies", "facilities": ["Library", "Computer Lab"], "image": "https://placehold.co/600x400/3b82f6/ffffff?text=WC+Nawakadal" },
+    { "id": 6, "name": "GDC Bemina", "location": "Srinagar", "streams": ["Arts", "Science", "Commerce", "Vocational"], "courses": ["Functional English", "Sociology", "Islamic Studies", "BCA", "Industrial Chemistry", "Bio-Chemistry", "Environmental Science", "Bio-Technology", "Statistics", "Food Science & Technology", "Mass Communication", "PG in Commerce"], "contact_numbers": ["0194-2491715", "9419072024"], "website": "www.gdcbemina.edu.in", "email": "gdcbemina@gmail.com", "cutoff": "Varies", "facilities": ["Library", "Labs", "Sports"], "image": "https://placehold.co/600x400/8b5cf6/ffffff?text=GDC+Bemina" },
+    { "id": 7, "name": "W.C. Srinagar", "location": "Srinagar", "streams": ["Arts", "Science"], "courses": ["Home Science", "English"], "contact_numbers": ["0194-2311548", "9419061392"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library", "Canteen"], "image": "https://placehold.co/600x400/14b8a6/ffffff?text=W.C.+Srinagar" },
+    { "id": 8, "name": "GDC Bagi Dilawar Khan", "location": "Srinagar", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["9906569536"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/6366f1/ffffff?text=GDC+Bagi+Dilawar" },
+    { "id": 9, "name": "GDC Ganderbal", "location": "Ganderbal", "streams": ["Arts", "Vocational", "Commerce"], "courses": ["BCA", "Environmental Science", "Geography", "Statistics", "Functional English"], "contact_numbers": ["0194-2416854", "9419089615"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library", "Computer Lab"], "image": "https://placehold.co/600x400/10b981/ffffff?text=GDC+Ganderbal" },
+    { "id": 10, "name": "GDC Kangan", "location": "Ganderbal", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["9419473722"], "website": null, "email": "principalgdckangan1@yahoo.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/f59e0b/ffffff?text=GDC+Kangan" },
+    { "id": 11, "name": "GDC Budgam", "location": "Budgam", "streams": ["Arts", "Science", "Vocational"], "courses": ["Computer Applications", "Sociology", "Environmental Science"], "contact_numbers": ["01951-256444", "9419009918"], "website": "www.gdcbudgam.edu.in", "email": null, "cutoff": "Varies", "facilities": ["Library", "Labs"], "image": "https://placehold.co/600x400/ef4444/ffffff?text=GDC+Budgam" },
+    { "id": 12, "name": "GDC Beerwah", "location": "Budgam", "streams": ["Arts", "Science", "Vocational", "Commerce"], "courses": ["Computer Applications", "Environmental Science"], "contact_numbers": ["01951-275223", "9419574741"], "website": null, "email": "gdcbeerwah@gmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/3b82f6/ffffff?text=GDC+Beerwah" },
+    { "id": 13, "name": "GDC Khansahib", "location": "Budgam", "streams": ["Arts"], "courses": ["Environmental Science"], "contact_numbers": ["9419010955", "9906719513"], "website": null, "email": "gdckhansahib123@gmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/8b5cf6/ffffff?text=GDC+Khansahib" },
+    { "id": 14, "name": "GDC Charar-i-Sharief", "location": "Budgam", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["7298782532"], "website": null, "email": "gdc.charar-i-sharief@gmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/14b8a6/ffffff?text=GDC+Charar-i-Sharief" },
+    { "id": 15, "name": "GDC Magam", "location": "Budgam", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["9419056355"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/6366f1/ffffff?text=GDC+Magam" },
+    { "id": 16, "name": "GDC Bandipora", "location": "Bandipora", "streams": ["Arts", "Science", "Vocational"], "courses": ["Computer Applications", "Kashmiri", "History", "Environmental Science"], "contact_numbers": ["01957-225430", "9419404471"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library", "Labs"], "image": "https://placehold.co/600x400/10b981/ffffff?text=GDC+Bandipora" },
+    { "id": 17, "name": "GDC Gurez", "location": "Bandipora", "streams": ["Arts"], "courses": ["Environmental Science"], "contact_numbers": ["0195-7245287", "9419431154"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/f59e0b/ffffff?text=GDC+Gurez" },
+    { "id": 18, "name": "GDC Sumbal", "location": "Bandipora", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["9419008989"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/ef4444/ffffff?text=GDC+Sumbal" },
+    { "id": 19, "name": "GDC Anantnag", "location": "Anantnag", "streams": ["Arts", "Science", "Commerce", "Vocational"], "courses": ["Sociology", "Electronics", "Equipment & Maintenance", "Seed Technology", "Environmental Science", "Statistics", "BCA", "Bio-Technology", "PG in English"], "contact_numbers": ["01932-222308", "9419040906"], "website": "www.gdcang.ac.in", "email": null, "cutoff": "Varies", "facilities": ["Library", "Hostel", "Labs"], "image": "https://placehold.co/600x400/3b82f6/ffffff?text=GDC+Anantnag" },
+    { "id": 20, "name": "Women’s College Anantnag", "location": "Anantnag", "streams": ["Science", "Arts", "Vocational"], "courses": ["Sericulture", "Home Science", "Environmental Science", "Sociology", "BCA", "PG in Chemistry"], "contact_numbers": ["01932-222385", "9419048292"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library", "Labs"], "image": "https://placehold.co/600x400/8b5cf6/ffffff?text=WC+Anantnag" },
+    { "id": 21, "name": "GDC Dooru", "location": "Anantnag", "streams": ["Arts", "Science", "Vocational"], "courses": ["Computer Applications", "Sociology", "Environmental Science"], "contact_numbers": ["01932-230175", "9419412632"], "website": "www.gdcdooru.net", "email": null, "cutoff": "Varies", "facilities": ["Library", "Labs"], "image": "https://placehold.co/600x400/14b8a6/ffffff?text=GDC+Dooru" },
+    { "id": 22, "name": "GDC Bijbehara", "location": "Anantnag", "streams": ["Arts", "Science", "Vocational"], "courses": ["Computer Applications", "Environmental Science"], "contact_numbers": ["01932-233263", "9419079184"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/6366f1/ffffff?text=GDC+Bijbehara" },
+    { "id": 23, "name": "GDC Kokernag", "location": "Anantnag", "streams": ["Arts"], "courses": ["Environmental Science"], "contact_numbers": ["9906619756"], "website": null, "email": "gdckokernag@gmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/10b981/ffffff?text=GDC+Kokernag" },
+    { "id": 24, "name": "GDC Uttrasoo", "location": "Anantnag", "streams": ["Arts"], "courses": ["Environmental Science"], "contact_numbers": ["01932-292975", "9419450527"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/f59e0b/ffffff?text=GDC+Uttrasoo" },
+    { "id": 25, "name": "GDC Vailoo-Larnoo", "location": "Anantnag", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["9419474995"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/ef4444/ffffff?text=GDC+Vailoo-Larnoo" },
+    { "id": 26, "name": "GDC Kulgam", "location": "Kulgam", "streams": ["Arts", "Science", "Commerce"], "courses": ["Environmental Science"], "contact_numbers": ["01931-260177", "9419595057"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library", "Labs"], "image": "https://placehold.co/600x400/3b82f6/ffffff?text=GDC+Kulgam" },
+    { "id": 27, "name": "GDC Killam", "location": "Kulgam", "streams": ["Arts"], "courses": ["Environmental Science"], "contact_numbers": ["9469426832"], "website": null, "email": "principalgdckilam@gmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/8b5cf6/ffffff?text=GDC+Killam" },
+    { "id": 28, "name": "GDC D.H. Pora", "location": "Kulgam", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["9419073693"], "website": null, "email": "principalgdcdhpora@gamil.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/14b8a6/ffffff?text=GDC+D.H.+Pora" },
+    { "id": 29, "name": "GDC Pulwama", "location": "Pulwama", "streams": ["Arts", "Science", "Commerce"], "courses": ["Environmental Science", "Islamic Studies"], "contact_numbers": ["01933-241250", "9419024884"], "website": null, "email": "gdcpulwama@gmail.com", "cutoff": "Varies", "facilities": ["Library", "Labs"], "image": "https://placehold.co/600x400/6366f1/ffffff?text=GDC+Pulwama" },
+    { "id": 30, "name": "Women College Pulwama", "location": "Pulwama", "streams": ["Arts"], "courses": ["Environmental Science"], "contact_numbers": ["9419024864"], "website": null, "email": "gdcwomenpulwama@gmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/10b981/ffffff?text=WC+Pulwama" },
+    { "id": 31, "name": "GDC Tral", "location": "Pulwama", "streams": ["Arts", "Commerce"], "courses": ["Environmental Science"], "contact_numbers": ["01933-250033", "9419534394"], "website": null, "email": "gdctral@rediffmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/f59e0b/ffffff?text=GDC+Tral" },
+    { "id": 32, "name": "GDC Pampore", "location": "Pulwama", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["8803411280"], "website": null, "email": "gdcpampore@gmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/ef4444/ffffff?text=GDC+Pampore" },
+    { "id": 33, "name": "GDC Shopian", "location": "Shopian", "streams": ["Arts"], "courses": ["Islamic Studies", "Environmental Science", "Sociology"], "contact_numbers": ["01933-260204", "9419047885"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/3b82f6/ffffff?text=GDC+Shopian" },
+    { "id": 34, "name": "Women College Baramulla", "location": "Baramulla", "streams": ["Arts", "Science", "Vocational"], "courses": ["Environmental Science", "BCA", "Computer Applications"], "contact_numbers": ["01952-234985", "9419033246"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library", "Labs"], "image": "https://placehold.co/600x400/8b5cf6/ffffff?text=WC+Baramulla" },
+    { "id": 35, "name": "GDC Baramulla", "location": "Baramulla", "streams": ["Arts", "Science", "Commerce", "Vocational"], "courses": ["Functional English", "Environmental Science", "Fisheries", "Social Studies", "Sociology", "MCVP", "MCMP", "IT", "Bio-Technology", "BCA", "BBA"], "contact_numbers": ["01952-234214", "9419032863"], "website": "www.baramullacollege.net", "email": null, "cutoff": "Varies", "facilities": ["Library", "Hostel", "Labs"], "image": "https://placehold.co/600x400/14b8a6/ffffff?text=GDC+Baramulla" },
+    { "id": 36, "name": "GDC Sopore", "location": "Baramulla", "streams": ["Arts", "Science", "Commerce", "Vocational"], "courses": ["Sericulture", "Psychology", "Environmental Science", "Computer Applications", "BBA", "Kashmiri", "Bio-Technology", "Tourism & Travel Management"], "contact_numbers": ["01954-222262", "9419039720"], "website": "www.gdcsopore.ac.in", "email": null, "cutoff": "Varies", "facilities": ["Library", "Labs"], "image": "https://placehold.co/600x400/6366f1/ffffff?text=GDC+Sopore" },
+    { "id": 37, "name": "W.C. Sopore", "location": "Baramulla", "streams": ["Arts", "Science", "Vocational"], "courses": ["Computer Applications", "Sociology", "Arabic", "Psychology", "Environmental Science"], "contact_numbers": ["01954-225046", "9419052746"], "website": null, "email": "gdcw.sopore@gmail.com", "cutoff": "Varies", "facilities": ["Library", "Labs"], "image": "https://placehold.co/600x400/10b981/ffffff?text=W.C.+Sopore" },
+    { "id": 38, "name": "GDC Pattan", "location": "Baramulla", "streams": ["Arts", "Vocational"], "courses": ["Computer Applications", "History", "Sociology", "Environmental Science"], "contact_numbers": ["01954-231775", "9419412134"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/f59e0b/ffffff?text=GDC+Pattan" },
+    { "id": 39, "name": "GDC Uri", "location": "Baramulla", "streams": ["Arts", "Vocational"], "courses": ["Computer Applications", "Psychology", "Arabic", "Environmental Science"], "contact_numbers": ["9419400726"], "website": "www.uricollege.net", "email": "uricollege@gmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/ef4444/ffffff?text=GDC+Uri" },
+    { "id": 40, "name": "GDC Tangmarg", "location": "Baramulla", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["9906644911"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/3b82f6/ffffff?text=GDC+Tangmarg" },
+    { "id": 41, "name": "GDC Hadipora", "location": "Baramulla", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["9419430394"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/8b5cf6/ffffff?text=GDC+Hadipora" },
+    { "id": 42, "name": "GDC Kupwara", "location": "Kupwara", "streams": ["Arts", "Science", "Vocational"], "courses": ["Environmental Science", "BCA", "Sociology"], "contact_numbers": ["01955-252155", "9419036917"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library", "Computer Lab"], "image": "https://placehold.co/600x400/14b8a6/ffffff?text=GDC+Kupwara" },
+    { "id": 43, "name": "GDC Handwara", "location": "Kupwara", "streams": ["Arts", "Science", "Commerce"], "courses": ["Environmental Science"], "contact_numbers": ["01955-262203", "9419921420"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/6366f1/ffffff?text=GDC+Handwara" },
+    { "id": 44, "name": "GDC Sogam", "location": "Kupwara", "streams": ["Arts"], "courses": ["Environmental Science"], "contact_numbers": ["959601425"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/10b981/ffffff?text=GDC+Sogam" },
+    { "id": 45, "name": "GDC Tangdhar", "location": "Kupwara", "streams": ["Arts"], "courses": ["Environmental Science"], "contact_numbers": ["9419405248"], "website": null, "email": "gdctangdhar@gmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/f59e0b/ffffff?text=GDC+Tangdhar" },
+    { "id": 46, "name": "Women College Kupwara", "location": "Kupwara", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["9419446101"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/ef4444/ffffff?text=WC+Kupwara" },
+    { "id": 47, "name": "GDC Leh", "location": "Leh", "streams": ["Arts", "Science"], "courses": ["Environmental Science", "Psychology"], "contact_numbers": ["01982-252409", "9419218045"], "website": null, "email": "principal.ejmc.leh.1@gmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/3b82f6/ffffff?text=GDC+Leh" },
+    { "id": 48, "name": "GDC Nobra", "location": "Leh", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": [], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/8b5cf6/ffffff?text=GDC+Nobra" },
+    { "id": 49, "name": "GDC Kargil", "location": "Kargil", "streams": ["Arts", "Science", "Commerce"], "courses": ["Environmental Science", "Sociology"], "contact_numbers": ["01985-232392", "9419176427"], "website": null, "email": "principal_gdck@rediffmail.com", "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/14b8a6/ffffff?text=GDC+Kargil" },
+    { "id": 50, "name": "GDC Zanaskar", "location": "Kargil", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["9796380839"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/6366f1/ffffff?text=GDC+Zanaskar" },
+    { "id": 51, "name": "GGM Science College", "location": "Jammu", "streams": ["Science", "Vocational", "Arts"], "courses": ["BCA", "Bio-Technology", "Environmental Science", "B.Sc-IT", "English", "Geology"], "contact_numbers": ["0191-2548189", "9419104522"], "website": "www.ggmsciencecollege.in", "email": null, "cutoff": "Varies", "facilities": ["Library", "Hostel", "Labs"], "image": "https://placehold.co/600x400/10b981/ffffff?text=GGM+Science" },
+    { "id": 52, "name": "Women College Parade", "location": "Jammu", "streams": ["Arts", "Science", "Commerce", "Vocational"], "courses": ["Environmental Science", "BCA", "Sociology", "Electronics", "Home Science", "Music (vocal & instrumental)"], "contact_numbers": ["0191-2544305", "9419103074"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library", "Hostel"], "image": "https://placehold.co/600x400/f59e0b/ffffff?text=WC+Parade" },
+    { "id": 53, "name": "MAM College", "location": "Jammu", "streams": ["Arts", "Science", "Commerce", "Vocational"], "courses": ["Non-Medical", "Mathematics", "Management", "Environmental Science", "BCA", "BBA"], "contact_numbers": ["0191-2453497", "9419139015"], "website": "www.mamcollegejammu.org", "email": null, "cutoff": "Varies", "facilities": ["Library", "Labs"], "image": "https://placehold.co/600x400/ef4444/ffffff?text=MAM+College" },
+    { "id": 54, "name": "SPMR Commerce", "location": "Jammu", "streams": ["Commerce", "Vocational"], "courses": ["Environmental Science", "BBA", "BCA"], "contact_numbers": ["0191-2544321", "9419119869"], "website": "www.spmrcommercecollegejmu.com", "email": null, "cutoff": "Varies", "facilities": ["Library", "Computer Lab"], "image": "https://placehold.co/600x400/3b82f6/ffffff?text=SPMR+Commerce" },
+    { "id": 55, "name": "Women College Gandhinagar", "location": "Jammu", "streams": ["Arts", "Science", "Vocational"], "courses": ["Commerce Applications", "Bio-Technology", "Environmental Science", "Home Science (Elective Subject)", "Food Science & Technology", "Music (Vocal & Instrumental)"], "contact_numbers": ["0191-2435158", "9419102359"], "website": "www.gcwgandhinagar.com", "email": null, "cutoff": "Varies", "facilities": ["Library", "Hostel", "Labs"], "image": "https://placehold.co/600x400/8b5cf6/ffffff?text=WC+Gandhinagar" },
+    { "id": 56, "name": "GDC R.S. Pura", "location": "Jammu", "streams": ["Arts", "Science"], "courses": ["Environmental Science", "History", "Sociology"], "contact_numbers": ["01923-252958", "9419211446"], "website": "www.gdcrspurajammu.com", "email": null, "cutoff": "Varies", "facilities": ["Library", "Labs"], "image": "https://placehold.co/600x400/14b8a6/ffffff?text=GDC+R.S.+Pura" },
+    { "id": 57, "name": "GDC Akhnoor", "location": "Jammu", "streams": ["Arts", "Science"], "courses": ["Environmental Science", "Sociology", "Philosophy"], "contact_numbers": ["9419203086"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/6366f1/ffffff?text=GDC+Akhnoor" },
+    { "id": 58, "name": "COE Jammu", "location": "Jammu", "streams": ["Vocational", "Arts"], "courses": ["B.Ed", "Computer Applications", "M.Ed"], "contact_numbers": ["0191-2577401", "9419104272"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/10b981/ffffff?text=COE+Jammu" },
+    { "id": 59, "name": "GDC Paloura", "location": "Jammu", "streams": ["Arts"], "courses": ["Environmental Science"], "contact_numbers": ["0191-2585182", "9419184174"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/f59e0b/ffffff?text=GDC+Paloura" },
+    { "id": 60, "name": "GDC Bishnah", "location": "Jammu", "streams": ["Arts"], "courses": ["Environmental Science"], "contact_numbers": ["9419202845"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/ef4444/ffffff?text=GDC+Bishnah" },
+    { "id": 61, "name": "Islamia Science & Commerce College", "location": "Srinagar", "streams": ["Science", "Commerce", "Vocational"], "courses": ["Various UG Courses"], "contact_numbers": ["0194-2429014", "9419009833"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/3b82f6/ffffff?text=Islamia+College" },
+    { "id": 62, "name": "Gandhi Memorial College", "location": "Srinagar", "streams": ["Arts"], "courses": ["Various UG Courses"], "contact_numbers": ["0194-2471726", "9419021926"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/8b5cf6/ffffff?text=GM+College" },
+    { "id": 63, "name": "Vishwa Bharti College", "location": "Srinagar/Jammu", "streams": ["Arts", "Science", "Vocational"], "courses": ["B.Ed", "Various UG Courses"], "contact_numbers": ["0194-2451402", "9906512584"], "website": null, "email": null, "cutoff": "Varies", "facilities": ["Library"], "image": "https://placehold.co/600x400/14b8a6/ffffff?text=Vishwa+Bharti" }
+]
