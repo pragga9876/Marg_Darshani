@@ -1,80 +1,47 @@
 // js/dashboard.js
 import { auth, db } from './firebase-config.js';
 import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-import { colleges } from './data.js';
-import { showSection } from './ui.js';
+import { getColleges } from './colleges.js'; // Import getColleges to access live data
 
 const profileForm = document.getElementById('profile-form');
-const saveProfileBtn = document.getElementById('save-profile-btn');
 const editProfileBtn = document.getElementById('edit-profile-btn');
-const formInputs = profileForm.querySelectorAll('input, select');
+const saveProfileBtn = document.getElementById('save-profile-btn');
 
-// --- PROFILE FORM MANAGEMENT ---
+// Define all input fields here
+const studentName = document.getElementById('student-name');
+const studentAge = document.getElementById('student-age');
+const studentGender = document.getElementById('student-gender');
+const studentLocation = document.getElementById('student-location');
 
-// Function to enable editing of the profile form
-function enableProfileEditing() {
+// An array to easily manage all form inputs
+const formInputs = [studentName, studentAge, studentGender, studentLocation];
+
+// Toggles the profile form between read-only and editable states
+function toggleProfileEdit(isEditing) {
     formInputs.forEach(input => {
-        input.disabled = false;
-    });
-    saveProfileBtn.classList.remove('hidden');
-    editProfileBtn.classList.add('hidden');
-}
-
-// Function to disable editing of the profile form
-function disableProfileEditing() {
-    formInputs.forEach(input => {
-        input.disabled = true;
-    });
-    saveProfileBtn.classList.add('hidden');
-    editProfileBtn.classList.remove('hidden');
-}
-
-// --- FIRESTORE FUNCTIONS ---
-
-// Function to save a college to the user's list in Firestore.
-export async function saveCollege(collegeId) {
-    const user = auth.currentUser;
-    if (!user || user.isAnonymous) {
-        showSection('login-section');
-        document.getElementById('detail-modal').style.display = 'none';
-        return;
-    }
-
-    const userDocRef = doc(db, "students", user.uid);
-    const saveBtn = document.getElementById('save-college-btn');
-    if (!saveBtn) return;
-    
-    saveBtn.disabled = true;
-
-    try {
-        const docSnap = await getDoc(userDocRef);
-        let savedColleges = [];
-        if (docSnap.exists() && docSnap.data().savedColleges) {
-            savedColleges = docSnap.data().savedColleges;
-        }
-
-        if (!savedColleges.includes(collegeId)) {
-            savedColleges.push(collegeId);
-            await setDoc(userDocRef, { savedColleges }, { merge: true });
-            saveBtn.textContent = 'Saved!';
-            loadStudentDashboard(user.uid);
+        // Use 'disabled' for SELECT, and 'readOnly' for INPUT for better user experience
+        if (input.tagName === 'INPUT') {
+            input.readOnly = !isEditing;
         } else {
-            saveBtn.textContent = 'Already Saved';
+            input.disabled = !isEditing;
         }
-    } catch (error) {
-        console.error("Error saving college: ", error);
-        saveBtn.textContent = 'Error!';
-    }
+        input.classList.toggle('bg-slate-100', !isEditing); // Visual cue for non-editable fields
+    });
 
-    setTimeout(() => {
-        document.getElementById('detail-modal').style.display = 'none';
-    }, 1200);
+    // Toggle button visibility
+    editProfileBtn.classList.toggle('hidden', isEditing);
+    saveProfileBtn.classList.toggle('hidden', !isEditing);
+
+    // If editing, focus on the first input
+    if (isEditing) {
+        studentName.focus();
+    }
 }
 
 // Function to remove a college from the saved list
 async function removeSavedCollege(collegeId) {
     const user = auth.currentUser;
-    if (!user || user.isAnonymous) return;
+    if (!user) return;
 
     const userDocRef = doc(db, "students", user.uid);
     try {
@@ -83,7 +50,7 @@ async function removeSavedCollege(collegeId) {
             let savedColleges = docSnap.data().savedColleges || [];
             const updatedColleges = savedColleges.filter(id => id !== collegeId);
             await setDoc(userDocRef, { savedColleges: updatedColleges }, { merge: true });
-            loadStudentDashboard(user.uid);
+            loadStudentDashboard(user.uid); // Refresh the list after removing
         }
     } catch (error) {
         console.error("Error removing college:", error);
@@ -99,75 +66,82 @@ export async function loadStudentDashboard(userId) {
 
     if (docSnap.exists()) {
         const data = docSnap.data();
-        document.getElementById('student-name').value = data.name || '';
-        document.getElementById('student-age').value = data.age || '';
-        document.getElementById('student-gender').value = data.gender || '';
-        document.getElementById('student-location').value = data.location || '';
-
+        // Populate all fields
+        studentName.value = data.name || '';
+        studentAge.value = data.age || '';
+        studentGender.value = data.gender || '';
+        studentLocation.value = data.location || '';
+        
+        // Load saved colleges
         const savedCollegesList = document.getElementById('saved-colleges-list');
+        const allColleges = getColleges(); 
+        
         if (data.savedColleges && data.savedColleges.length > 0) {
             savedCollegesList.innerHTML = '';
             data.savedColleges.forEach(collegeId => {
-                const college = colleges.find(c => c.id === collegeId);
+                const college = allColleges.find(c => c.id === collegeId);
                 if (college) {
                     const collegeEl = document.createElement('div');
-                    collegeEl.className = 'bg-slate-100 p-3 rounded-lg flex justify-between items-center';
+                    collegeEl.className = 'admin-list-item'; // Re-using admin style for consistency
                     collegeEl.innerHTML = `
                         <div>
                             <p class="font-semibold">${college.name}</p>
                             <p class="text-sm text-slate-500">${college.location}</p>
                         </div>
-                        <button class="text-red-500 hover:text-red-700 text-sm font-medium">Remove</button>`;
+                        <button class="text-red-600 hover:text-red-800 text-sm font-medium">Remove</button>
+                    `;
                     collegeEl.querySelector('button').addEventListener('click', () => removeSavedCollege(collegeId));
                     savedCollegesList.appendChild(collegeEl);
                 }
             });
         } else {
-            savedCollegesList.innerHTML = '<p class="text-slate-500">You haven\'t saved any colleges yet.</p>';
+             savedCollegesList.innerHTML = '<p class="text-slate-500">You haven\'t saved any colleges yet.</p>';
         }
     } else {
-         document.getElementById('saved-colleges-list').innerHTML = '<p class="text-slate-500">You haven\'t saved any colleges yet. Save your profile to get started!</p>';
+        // Handle case where user has no profile data yet
+        document.getElementById('saved-colleges-list').innerHTML = '<p class="text-slate-500">You haven\'t saved any colleges yet.</p>';
     }
-    
-    // Ensure the form is not editable on load
-    disableProfileEditing();
+    // Ensure form is in non-editable state on load
+    toggleProfileEdit(false);
 }
+
 
 // Sets up the event listeners for the dashboard buttons
 export function initDashboard() {
-    editProfileBtn.addEventListener('click', enableProfileEditing);
+    // Make sure the buttons exist before adding listeners
+    if(editProfileBtn) {
+        editProfileBtn.addEventListener('click', () => toggleProfileEdit(true));
+    }
+    if(profileForm){
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = auth.currentUser;
+            if (!user) return;
     
-    profileForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const user = auth.currentUser;
-        if (!user) return;
-
-        const profileData = {
-            name: document.getElementById('student-name').value,
-            age: document.getElementById('student-age').value,
-            gender: document.getElementById('student-gender').value,
-            location: document.getElementById('student-location').value
-        };
-
-        saveProfileBtn.textContent = 'Saving...';
-        saveProfileBtn.disabled = true;
-
-        try {
-            await setDoc(doc(db, "students", user.uid), profileData, { merge: true });
-            saveProfileBtn.textContent = 'Profile Saved!';
-            // After saving successfully, disable the form again
-            disableProfileEditing();
-            setTimeout(() => { 
-                saveProfileBtn.textContent = 'Save Changes';
+            saveProfileBtn.disabled = true;
+            saveProfileBtn.textContent = 'Saving...';
+    
+            // Create the data object to save
+            const profileData = {
+                name: studentName.value,
+                age: studentAge.value,
+                gender: studentGender.value,
+                location: studentLocation.value,
+            };
+    
+            try {
+                await setDoc(doc(db, "students", user.uid), profileData, { merge: true });
+                saveProfileBtn.textContent = 'Profile Saved!';
+                setTimeout(() => {
+                    saveProfileBtn.textContent = 'Save Profile';
+                    toggleProfileEdit(false); // Disable form after successful save
+                }, 1500);
+            } catch (error) {
+                console.error("Error saving profile:", error);
+                saveProfileBtn.textContent = 'Error!';
+            } finally {
                 saveProfileBtn.disabled = false;
-            }, 2000);
-        } catch (error) {
-            console.error("Error saving profile: ", error);
-            saveProfileBtn.textContent = 'Error Saving!';
-             setTimeout(() => {
-                saveProfileBtn.textContent = 'Save Changes';
-                saveProfileBtn.disabled = false;
-            }, 2000);
-        }
-    });
+            }
+        });
+    }
 }

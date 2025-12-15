@@ -2,7 +2,7 @@
 
 // --- APTITUDE TEST DATA ---
 export const quizQuestions = [
-    {
+   {
         question: "Which activity sounds most enjoyable to you?",
         options: [
             { text: "Building or repairing things", trait: 'R' },
@@ -46,6 +46,97 @@ export const quizQuestions = [
             { text: "A school, hospital, or counseling center", trait: 'S' },
             { text: "A design studio, theater, or concert hall", trait: 'A' }
         ]
+    },
+    // New 10 Questions
+    {
+        question: "When faced with a problem, you are more likely to:",
+        options: [
+            { text: "Trust your intuition and feelings.", trait: 'A'},
+            { text: "Follow a step-by-step logical plan.", trait: 'C'},
+            { text: "Experiment with hands-on solutions.", trait: 'R'},
+            { text: "Research and analyze all available data.", trait: 'I'}
+        ]
+    },
+    {
+        question: "Which type of book would you pick up to read for fun?",
+        options: [
+            { text: "A biography of a successful entrepreneur.", trait: 'E'},
+            { text: "A non-fiction book about scientific discoveries.", trait: 'I'},
+            { text: "A self-help book about communication.", trait: 'S'},
+            { text: "A manual on how to fix a car or computer.", trait: 'R'}
+        ]
+    },
+    {
+        question: "You feel most satisfied after:",
+        options: [
+            { text: "Organizing a messy room or spreadsheet.", trait: 'C'},
+            { text: "Successfully leading a team to a goal.", trait: 'E'},
+            { text: "Helping a friend solve a personal problem.", trait: 'S'},
+            { text: "Finishing a creative project like a painting or song.", trait: 'A'}
+        ]
+    },
+    {
+        question: "What is your preferred way of learning?",
+        options: [
+            { text: "By observing and asking 'why'.", trait: 'I'},
+            { text: "Through structured lectures and clear rules.", trait: 'C'},
+            { text: "By doing and interacting with the subject matter.", trait: 'R'},
+            { text: "In a group discussion with others.", trait: 'S'}
+        ]
+    },
+    {
+        question: "Which career sounds most appealing?",
+        options: [
+            { text: "Corporate CEO", trait: 'E'},
+            { text: "Mechanical Engineer", trait: 'R'},
+            { text: "Graphic Designer", trait: 'A'},
+            { text: "Accountant", trait: 'C'}
+        ]
+    },
+    {
+        question: "You are often described by friends as:",
+        options: [
+            { text: "Supportive and a good listener.", trait: 'S'},
+            { text: "Independent and original.", trait: 'A'},
+            { text: "Logical and objective.", trait: 'I'},
+            { text: "Confident and persuasive.", trait: 'E'}
+        ]
+    },
+    {
+        question: "In your free time, you'd rather:",
+        options: [
+            { text: "Work on a personal business idea.", trait: 'E'},
+            { text: "Volunteer for a cause you care about.", trait: 'S'},
+            { text: "Tinker with electronics or do gardening.", trait: 'R'},
+            { text: "Play brain-teasers or Sudoku.", trait: 'I'}
+        ]
+    },
+    {
+        question: "Which task would you find most draining?",
+        options: [
+            { text: "Doing repetitive, detail-oriented paperwork.", trait: 'A'},
+            { text: "Working alone on a research project for weeks.", trait: 'S'},
+            { text: "Following strict rules with no room for creativity.", trait: 'A'},
+            { text: "Trying to sell a product you don't believe in.", trait: 'C'}
+        ]
+    },
+    {
+        question: "You prefer to work in an environment that is:",
+        options: [
+            { text: "Predictable and orderly.", trait: 'C'},
+            { text: "Competitive and fast-paced.", trait: 'E'},
+            { text: "Collaborative and friendly.", trait: 'S'},
+            { text: "Flexible and unstructured.", trait: 'A'}
+        ]
+    },
+    {
+        question: "If you were given a project, what would be your first step?",
+        options: [
+            { text: "Create a detailed plan and schedule.", trait: 'C'},
+            { text: "Assemble the tools and materials needed.", trait: 'R'},
+            { text: "Brainstorm creative and unconventional ideas.", trait: 'A'},
+            { text: "Delegate tasks and motivate the team.", trait: 'E'}
+        ]
     }
 ];
 
@@ -66,11 +157,53 @@ export const careerPaths = {
     "B.Com (Hons)": { description: "Provides in-depth knowledge of accounting, finance, and business...", govJobs: ["Bank PO", "SSC CGL (Auditor)"], privateJobs: ["Chartered Accountant (CA)", "Financial Analyst"], higherStudies: ["M.Com", "MBA (Finance)"] },
     "BBA": { description: "A comprehensive management course...", govJobs: ["Bank Managerial Roles", "PSU Management Trainee"], privateJobs: ["Marketing Manager", "HR Manager"], higherStudies: ["MBA", "PGDM"] },
     "B.Tech Computer Science": {
-        description: "A comprehensive engineering degree focusing on the design, development, and testing of software and hardware. It covers programming, algorithms, data structures, and computer networks.",
+        description: "A comprehensive engineering degree focusing on the design, development, and testing of software and hardware.",
         govJobs: ["DRDO Scientist", "ISRO Scientist", "NIC Scientist", "IT Officer (Banks & PSUs)"],
-        privateJobs: ["Software Development Engineer (SDE)", "Data Scientist", "Cybersecurity Analyst", "Cloud Engineer", "Machine Learning Engineer"],
-        higherStudies: ["M.Tech in Computer Science", "MS from abroad", "MBA (Master of Business Administration)"]
+        privateJobs: ["Software Development Engineer (SDE)", "Data Scientist", "Cybersecurity Analyst"],
+        higherStudies: ["M.Tech in Computer Science", "MS from abroad", "MBA"]
     },
+    "B.Tech Electrical Engineering": {
+        description: "Focuses on the study and application of electricity, electronics, and electromagnetism, covering power systems, control systems, and electronics.",
+        govJobs: ["Junior Engineer (State Electricity Boards)", "Scientist (ISRO, DRDO)", "Engineer in PSUs (NTPC, BHEL)"],
+        privateJobs: ["Electrical Design Engineer", "Control Systems Engineer", "Hardware Engineer", "Power Systems Engineer"],
+        higherStudies: ["M.Tech in Electrical Engineering", "MS from abroad", "MBA"]
+    },
+    "MBBS": {
+        description: "A professional undergraduate medical degree required to become a doctor, involving extensive study of human anatomy, physiology, and clinical training.",
+        govJobs: ["Medical Officer (Govt. Hospitals, PHCs)", "Doctor in Armed Forces", "Medical Research Scientist"],
+        privateJobs: ["General Physician", "Surgeon (after specialization)", "Specialist Doctor", "Hospital Administrator"],
+        higherStudies: ["MD (Doctor of Medicine)", "MS (Master of Surgery)"]
+    },
+    "LLB (Bachelor of Laws)": {
+        description: "A foundational degree in law, covering subjects like constitutional law, criminal law, and legal procedures for a career as a lawyer, judge, or legal consultant.",
+        govJobs: ["Public Prosecutor", "Judge (Judiciary Exams)", "Legal Advisor (Govt. Depts)", "Law Officer (PSUs)"],
+        privateJobs: ["Corporate Lawyer", "Litigation Lawyer", "Legal Analyst", "Intellectual Property Lawyer"],
+        higherStudies: ["LLM (Master of Laws)", "MBA", "Civil Services"]
+    },
+    "B.A. Economics": {
+        description: "The study of production, distribution, and consumption of goods and services, involving analysis of economic trends, data, and government policies.",
+        govJobs: ["Indian Economic Service (IES)", "RBI Grade B Officer", "SEBI Officer", "Policy Analyst"],
+        privateJobs: ["Financial Analyst", "Data Analyst", "Market Research Analyst", "Economist"],
+        higherStudies: ["M.A. in Economics", "MBA (Finance)", "PhD in Economics"]
+    },
+    "Bachelor of Fine Arts (BFA)": {
+        description: "A degree focused on developing artistic skills in areas like painting, sculpture, photography, or graphic design.",
+        govJobs: ["Exhibition Designer (Museums)", "Government Media Departments"],
+        privateJobs: ["Graphic Designer", "Animator", "UI/UX Designer", "Art Director"],
+        higherStudies: ["Master of Fine Arts (MFA)", "PG Diploma in Design"]
+    },
+    "Bachelor of Journalism & Mass Communication (BJMC)": {
+        description: "Covers various aspects of media including reporting, editing, advertising, and public relations.",
+        govJobs: ["Public Relations Officer (PSUs)", "Media Liaison (Govt. Depts)"],
+        privateJobs: ["Journalist", "Content Writer", "Social Media Manager", "Corporate Communications"],
+        higherStudies: ["M.A. in Journalism", "PG Diploma in Advertising"]
+    },
+    "Bachelor of Science in Nursing (B.Sc Nursing)": {
+        description: "A professional course that prepares students for a career in nursing, focusing on patient care and medical treatment.",
+        govJobs: ["Nursing Officer (AIIMS, Govt. Hospitals)", "Military Nursing Service"],
+        privateJobs: ["Registered Nurse (Hospitals)", "Clinical Nurse Specialist", "Industrial Nurse"],
+        higherStudies: ["M.Sc. in Nursing", "PhD in Nursing"]
+    }
 };
 
 
